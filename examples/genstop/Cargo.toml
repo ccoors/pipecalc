@@ -1,0 +1,7 @@
+[package]
+name = "genstop"
+version = "0.1.0"
+authors = ["Christian F. Coors <ccoors@uni-bremen.de>"]
+
+[dependencies]
+pipecalc = { path = "../.." }

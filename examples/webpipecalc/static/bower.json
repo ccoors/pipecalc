@@ -1,0 +1,22 @@
+{
+  "name": "webpipecalc",
+  "authors": [
+    "Christian F. Coors <ccoors@uni-bremen.de>"
+  ],
+  "description": "An organ pipe calculation tool",
+  "main": "index.html",
+  "license": "GPL3",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation-sites": "^6.4.3",
+    "MathJax": "^2.7.2"
+  }
+}

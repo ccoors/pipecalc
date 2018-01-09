@@ -1,0 +1,9 @@
+[package]
+name = "webpipecalc"
+version = "0.1.0"
+authors = ["Christian F. Coors <ccoors@uni-bremen.de>"]
+
+[dependencies]
+yew = { git = "https://github.com/DenisKolodin/yew" }
+stdweb = "0.3"
+pipecalc = { path = "../.." }
