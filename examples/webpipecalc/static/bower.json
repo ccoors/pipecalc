@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "foundation-sites": "^6.4.3",
-    "MathJax": "^2.7.2"
+    "MathJax": "^2.7.2",
+    "font-awesome": "fontawesome#^4.7.0"
   }
 }

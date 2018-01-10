@@ -30,6 +30,10 @@ footer p {
     margin-bottom: 0;
 }
 
+table {
+    font-size: 90%;
+}
+
 .gpl_logo {
     width: 143.8px;
     height: 71.4px;

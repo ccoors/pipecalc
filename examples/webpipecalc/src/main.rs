@@ -138,11 +138,13 @@ fn render_table(model: &Model) -> String {
 <th>Theoretical resonator length $[\text{mm}]$</th>
 <th>Actual resonator length $[\text{mm}]$</th>
 <th>Diameter $[\text{mm}]$</th>
+<th>Cross section $[\text{mm}^2]$</th>
 <th>Cutup height $[\text{mm}]$</th>
 <th>Mouth width $[\text{mm}]$</th>
 <th>Pipe depth $[\text{mm}]$</th>
 <th>Jet thickness $[\text{mm}]$</th>
 <th>Air consumption rate $\left[\frac{\text{m}^3}{\text{s}}\right]$</th>
+<th>Sound power $[\text{W}]$</th>
 </tr>
 </thead>
 <tbody>
@@ -193,17 +195,19 @@ fn render_table(model: &Model) -> String {
             formatted_note_name.push_str(&format!("{}", octave));
             formatted_note_name.push_str("}$");
 
-            ret.push_str(&format!("<tr><td>{}</td><td>{:.2}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.8}</td></tr>",
+            ret.push_str(&format!("<tr><td>{}</td><td>{:.2}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.8}</td><td>{:.8}</td></tr>",
                                   formatted_note_name,
                                   frequency,
                                   dimensions.theoretical_resonator_length * 1000.0,
                                   dimensions.resonator_length * 1000.0,
                                   radius * 2.0 * 1000.0,
+                                  dimensions.cross_section * 1000.0 * 1000.0,
                                   dimensions.mouth_height * 1000.0,
                                   dimensions.mouth_width * 1000.0,
                                   dimensions.pipe_depth * 1000.0,
                                   dimensions.jet_thickness * 1000.0,
-                                  dimensions.air_consumption_rate));
+                                  dimensions.air_consumption_rate,
+                                  dimensions.sound_power));
         }
     }
 

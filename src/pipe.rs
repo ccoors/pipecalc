@@ -63,6 +63,9 @@ pub struct PipeProperties {
 
     // in m
     pub pipe_depth: f64,
+
+    // in W
+    pub sound_power: f64,
 }
 
 impl Pipe {
@@ -143,7 +146,9 @@ impl Pipe {
         let jet_thickness =
             0.001 * (f.powi(2) * i.powi(2) * (10.0 * mouth_height).powi(3)) / air_speed.powi(2);
 
-        //        let sound_power = 0.0001 * f64::consts::PI * (air_density / speed_of_sound) * f.powi(2) * (1.7 * (jet_thickness * speed_of_sound * f * mouth_area * mouth_area.sqrt()).sqrt()).powi(2);
+        let sound_power = 0.001 * f64::consts::PI * (self.air_density / speed_of_sound) * f.powi(2)
+            * (1.7 * (jet_thickness * speed_of_sound * f * mouth_area * mouth_area.sqrt()).sqrt())
+                .powi(2);
 
         let air_consumption_rate = air_speed * mouth_width * jet_thickness;
 
@@ -176,6 +181,7 @@ impl Pipe {
             cross_section,
             circumference,
             pipe_depth,
+            sound_power,
         }
     }
 }
@@ -187,6 +193,7 @@ mod tests {
     use super::*;
     use super::super::*;
     use super::super::util::*;
+
     #[allow(non_snake_case)]
     #[test]
     fn test_simple_pipe() {
@@ -199,19 +206,19 @@ mod tests {
         let mmH2O = 60.0;
         let pressure = util::mmH2O_to_pa(mmH2O);
 
+        let radius = pitch.get_tnm_radius();
         let mut pipe = Pipe::new();
         pipe.set_frequency(frequency);
         pipe.set_stopped(false);
         pipe.set_intonation_number(2.0);
         pipe.set_mouth_ratio(0.25);
         pipe.set_cutup_ratio(0.3);
-        pipe.set_radius(pitch.get_tnm_radius());
+        pipe.set_radius(radius);
         pipe.set_air_temperature(20.0);
         pipe.set_air_density(1.2);
         pipe.set_wind_pressure(pressure);
 
         let dimensions = pipe.get_dimensions();
-        //        println!("{:#?}", dimensions);
         assert!(approx(dimensions.resonator_length, 0.275, 0.01));
         assert!(approx(dimensions.theoretical_resonator_length, 0.328, 0.01));
         assert!(approx(dimensions.mouth_height, 0.00766, 0.001));
@@ -222,7 +229,7 @@ mod tests {
         assert!(approx(
             dimensions.air_consumption_rate,
             0.000401943302,
-            0.00001
+            0.00001,
         ));
         assert!(approx(dimensions.jet_thickness, 0.0005024, 0.00001));
         assert!(approx(dimensions.cross_section, 0.000830712, 0.00001));
