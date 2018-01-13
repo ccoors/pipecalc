@@ -29,7 +29,7 @@ MathJax.Hub.Config({
 });
     </script>
     <script>
-window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+window.onerror = function error_handler(errorMsg, url, lineNumber) {
     alert("An error occurred. You might try to use a newer/different web browser. The error message can be found in the console.");
     console.log(url + ": " + lineNumber + ": " + errorMsg);
     return false;
@@ -52,6 +52,85 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
 
     <p>Near an intonation number of 3 a pipe will start to overblow easier. This is why thin, long pipes like the
         violins usually have a frein attached to them.</p>
+
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="reveal" id="help-octave-notation" data-reveal>
+    <h1>Pitch notation</h1>
+    <p>This tool uses the scientific pitch notation (International Pitch Notation):</p>
+
+    <table class="hover">
+        <thead>
+        <tr>
+            <th>Scientific notation</th>
+            <th>Apostrophe notation</th>
+            <th>Index notation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>$\text{C}_{-3}$</td>
+            <td>,,,,,$\text{C}$ or $\text{CCCCCC}$</td>
+            <td>$\text{C}_5$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_{-2}$</td>
+            <td>,,,,$\text{C}$ or $\text{CCCCC}$</td>
+            <td>$\text{C}_4$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_{-1}$</td>
+            <td>,,,$\text{C}$ or $\text{CCCC}$</td>
+            <td>$\text{C}_3$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_0$</td>
+            <td>,,$\text{C}$ or $\text{CCC}$</td>
+            <td>$\text{C}_2$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_1$</td>
+            <td>,$\text{C}$ or $\text{C}$</td>
+            <td>$\text{C}_1$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_2$</td>
+            <td>$\text{C}$</td>
+            <td>$\text{C}$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_{3}$</td>
+            <td>$\text{c}$</td>
+            <td>$\text{c}$ or $\text{c}^0$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_{4}$</td>
+            <td>$\text{c}'$</td>
+            <td>$\text{c}^1$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_{5}$</td>
+            <td>$\text{c}''$</td>
+            <td>$\text{c}^2$</td>
+        </tr>
+        <tr>
+            <td>$\text{C}_{6}$</td>
+            <td>$\text{c}'''$</td>
+            <td>$\text{c}^3$</td>
+        </tr>
+        <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+        </tr>
+        </tbody>
+    </table>
+
+    $\text{C}_1 = \text{MIDI Note }24 \approx 32.7\text{ Hz}$<br>
+    $\text{C}_5 = \text{MIDI Note }72 \approx 523.25\text{ Hz}$
 
     <button class="close-button" data-close aria-label="Close modal" type="button">
         <span aria-hidden="true">&times;</span>
@@ -136,9 +215,8 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
         <tr>
             <td><strong>Sound power</strong></td>
             <td>The power of sound the pipe will generate. The formula for this value was just taken from Isings
-                formulas
-                and appears to be somewhat off. It's still given as it might be used to compare the sound powers of
-                similar pipes.
+                formulas and appears to be somewhat off. It's still given as it might be used to compare the sound
+                powers of similar pipes.
             </td>
         </tr>
         </tbody>
@@ -161,15 +239,23 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
     </button>
 </div>
 
+<div class="header-area">
+    <div class="content grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12">
+                <h1>WebPipeCalc</h1>
+                <p>A tool for calculating the dimensions of labial pipes for pipe organs.</p>
+                <p>
+                    <button class="button secondary" data-open="read-me">Read me</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="content grid-container">
     <div class="grid-x grid-margin-x">
         <div class="cell large-12">
-            <h1>WebPipeCalc</h1>
-            <p>A tool for calculating the dimensions of labial pipes for pipe organs.</p>
-            <p>
-                <button class="button secondary" data-open="read-me">Read me</button>
-            </p>
-
             <fieldset class="fieldset">
                 <legend>Environment</legend>
                 <div class="grid-x">
@@ -228,23 +314,25 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
 
                 <div class="grid-x">
                     <div class="cell medium-2">
-                        <label>First octave
+                        <label>First octave <a data-open="help-octave-notation">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </a>
                             <input type="number" value="4" min="-3" max="10" id="first_octave">
                         </label>
                     </div>
 
-                    <div class="cell medium-auto">
-                        <p class="text-center"><strong>Scientific notation</strong><br>
-                            $\text{C}1 = \text{C}, = \text{C}_1 = \text{MIDI Note }24 \approx 32.7\text{ Hz}$<br>
-                            ...<br>
-                            $\text{C}5 = \text{c}'' = \text{c}^2 = \text{MIDI Note }72 \approx 523.25\text{ Hz}$
-                        </p>
+                    <div class="cell medium-1">
+
                     </div>
 
                     <div class="cell medium-2">
                         <label>Last octave
                             <input type="number" value="6" min="-3" max="10" id="last_octave">
                         </label>
+                    </div>
+
+                    <div class="cell medium-auto">
+
                     </div>
                 </div>
 
@@ -288,32 +376,38 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
             </fieldset>
 
             <div class="mount-point"></div>
-
-            <div id="output-table"></div>
         </div>
     </div>
 </div>
 
+<div id="output-table"></div>
+
 <div class="grid-container">
-    <footer>
-        <p><a href="https://github.com/ccoors/pipecalc" target="_blank">pipecalc</a> &mdash; Copyright &copy;
-            2018 Christian Friedrich Coors. <a href="COPYING.txt">GPL3 License</a></p>
-        <p>This program is free software: you can redistribute it and/or modify
-            it under the terms of the GNU General Public License as published by
-            the Free Software Foundation, either version 3 of the License, or
-            (at your option) any later version.</p>
+    <div id="output-csv-download"></div>
+</div>
 
-        <p>This program is distributed in the hope that it will be useful,
-            but WITHOUT ANY WARRANTY; without even the implied warranty of
-            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-            GNU General Public License for more details.</p>
+<div class="footer-area">
+    <div class="grid-container">
+        <footer>
+            <p><a href="https://github.com/ccoors/pipecalc" target="_blank">pipecalc</a> &mdash; Copyright &copy;
+                2018 Christian Friedrich Coors. <a href="COPYING.txt">GPL3 License</a></p>
+            <p>This program is free software: you can redistribute it and/or modify
+                it under the terms of the GNU General Public License as published by
+                the Free Software Foundation, either version 3 of the License, or
+                (at your option) any later version.</p>
 
-        <p>You should have received a copy of the GNU General Public License
-            along with this program. If not, see <a href="http://www.gnu.org/licenses/" target="_blank">http://www.gnu.org/licenses/</a>.
-        </p>
+            <p>This program is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                GNU General Public License for more details.</p>
 
-        <div class="gpl_logo float-center"></div>
-    </footer>
+            <p>You should have received a copy of the GNU General Public License
+                along with this program. If not, see <a href="http://www.gnu.org/licenses/" target="_blank">http://www.gnu.org/licenses/</a>.
+            </p>
+
+            <div class="gpl_logo float-center"></div>
+        </footer>
+    </div>
 </div>
 
 <script src="bower_components/jquery/dist/jquery.js"></script>

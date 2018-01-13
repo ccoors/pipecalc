@@ -127,29 +127,122 @@ fn update(_context: &mut Context, model: &mut Model, msg: Msg) {
     }
 }
 
-fn render_table(model: &Model) -> String {
-    let mut ret = String::new();
-    ret.push_str(
+fn add_header(
+    title: &str,
+    unit_html: &str,
+    unit_csv: &str,
+    html: &mut String,
+    csv: &mut String,
+    last: bool,
+) {
+    html.push_str(&format!(
+        "<th>{} $\\left[{}\\right]$</th>",
+        title, unit_html
+    ));
+    csv.push_str(&format!("\"{} [{}]\"", title, unit_csv));
+    if !last {
+        csv.push_str(",");
+    }
+}
+
+fn add_entry(value: &str, html: &mut String, csv: &mut String, last: bool) {
+    html.push_str(&format!("<td>{}</td>", value));
+    if last {
+        csv.push_str(value);
+    } else {
+        csv.push_str(&format!("{},", value));
+    }
+}
+
+fn render_table(model: &Model) -> (String, String) {
+    let mut html = String::new();
+    let mut csv = String::new();
+    html.push_str(
         r#"<table class="hover">
 <thead>
 <tr>
-<th>Note</th>
-<th>Frequency $[\text{Hz}]$</th>
-<th>Theoretical resonator length $[\text{mm}]$</th>
-<th>Actual resonator length $[\text{mm}]$</th>
-<th>Diameter $[\text{mm}]$</th>
-<th>Cross section $[\text{mm}^2]$</th>
-<th>Cutup height $[\text{mm}]$</th>
-<th>Mouth width $[\text{mm}]$</th>
-<th>Pipe depth $[\text{mm}]$</th>
-<th>Jet thickness $[\text{mm}]$</th>
-<th>Air consumption rate $\left[\frac{\text{m}^3}{\text{s}}\right]$</th>
-<th>Sound power $[\text{W}]$</th>
-</tr>
-</thead>
-<tbody>
-"#,
+<th>Note</th>"#,
     );
+
+    csv.push_str("\"Note\",");
+
+    add_header("Frequency", "\\text{Hz}", "Hz", &mut html, &mut csv, false);
+    add_header(
+        "Theoretical resonator length",
+        "\\text{mm}",
+        "mm",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header(
+        "Actual resonator length",
+        "\\text{mm}",
+        "mm",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header("Diameter", "\\text{mm}", "mm", &mut html, &mut csv, false);
+    add_header(
+        "Cross section",
+        "\\text{mm}^2",
+        "mm^2",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header(
+        "Cutup height",
+        "\\text{mm}",
+        "mm",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header(
+        "Mouth width",
+        "\\text{mm}",
+        "mm",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header("Pipe depth", "\\text{mm}", "mm", &mut html, &mut csv, false);
+    add_header(
+        "Jet thickness",
+        "\\text{mm}",
+        "mm",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header(
+        "Minimum air hole diameter",
+        "\\text{mm}",
+        "mm",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header(
+        "Air consumption rate",
+        "\\frac{\\text{m}^3}{\\text{s}}",
+        "mm",
+        &mut html,
+        &mut csv,
+        false,
+    );
+    add_header("Sound power", "\\text{W}", "W", &mut html, &mut csv, true);
+
+    html.push_str(
+        r#"</tr>
+</thead>
+<tbody>"#,
+    );
+
+    csv.push_str("\n");
+
     let temp = pipecalc::Temperament::new_freq_equal(model.standard_pitch);
 
     for octave in model.first_octave..(model.last_octave + 1) {
@@ -189,38 +282,98 @@ fn render_table(model: &Model) -> String {
                 _ => panic!("Invalid note number"),
             };
 
-            let mut formatted_note_name = String::from(r#"$\text{"#); // format!("\\\\(\\text{{}{}", note_name, octave);
+            let mut formatted_note_name = String::from(r#"$\text{"#);
             formatted_note_name.push_str(&format!("{}", note_name));
             formatted_note_name.push_str("}_{");
             formatted_note_name.push_str(&format!("{}", octave));
             formatted_note_name.push_str("}$");
 
-            ret.push_str(&format!("<tr><td>{}</td><td>{:.2}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.4}</td><td>{:.8}</td><td>{:.8}</td></tr>",
-                                  formatted_note_name,
-                                  frequency,
-                                  dimensions.theoretical_resonator_length * 1000.0,
-                                  dimensions.resonator_length * 1000.0,
-                                  radius * 2.0 * 1000.0,
-                                  dimensions.cross_section * 1000.0 * 1000.0,
-                                  dimensions.mouth_height * 1000.0,
-                                  dimensions.mouth_width * 1000.0,
-                                  dimensions.pipe_depth * 1000.0,
-                                  dimensions.jet_thickness * 1000.0,
-                                  dimensions.air_consumption_rate,
-                                  dimensions.sound_power));
+            html.push_str("<tr>");
+            html.push_str(&format!("<td>{}</td>", formatted_note_name));
+            csv.push_str(&format!("{}{},", note_name, octave));
+            add_entry(&format!("{:.2}", frequency), &mut html, &mut csv, false);
+            add_entry(
+                &format!("{:.4}", dimensions.theoretical_resonator_length * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", dimensions.resonator_length * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", radius * 2.0 * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", dimensions.cross_section * 1000.0 * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", dimensions.mouth_height * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", dimensions.mouth_width * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", dimensions.pipe_depth * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", dimensions.jet_thickness * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.4}", dimensions.air_hole_diameter * 1000.0),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.8}", dimensions.air_consumption_rate),
+                &mut html,
+                &mut csv,
+                false,
+            );
+            add_entry(
+                &format!("{:.8}\n", dimensions.sound_power),
+                &mut html,
+                &mut csv,
+                true,
+            );
+            html.push_str("</tr>");
         }
     }
 
-    ret.push_str("</tbody></table>");
-    ret
+    html.push_str("</tbody></table>");
+    (html, csv)
 }
 
 fn view(model: &Model) -> Html<Msg> {
     if model.show {
-        let table = render_table(model);
+        let (html_table, csv) = render_table(model);
 
         js! {
-            $("#output-table").html(@{table});
+            var csv_download = "data:text/csv;charset=utf-8," + encodeURIComponent(@{csv});
+            $("#output-table").html(@{html_table});
+            $("#output-csv-download").html("<a class=\"button success radius\" href=\"" + csv_download + "\" download=\"pipes.csv\">Download results as CSV</a>");
             MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         }
 

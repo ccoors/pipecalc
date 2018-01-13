@@ -4,6 +4,6 @@ version = "0.1.0"
 authors = ["Christian F. Coors <ccoors@uni-bremen.de>"]
 
 [dependencies]
-yew = { git = "https://github.com/DenisKolodin/yew" }
+yew = "0.2"
 stdweb = "0.3"
 pipecalc = { path = "../.." }

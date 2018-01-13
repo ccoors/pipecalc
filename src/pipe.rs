@@ -66,6 +66,9 @@ pub struct PipeProperties {
 
     // in W
     pub sound_power: f64,
+
+    // in m
+    pub air_hole_diameter: f64,
 }
 
 impl Pipe {
@@ -169,6 +172,9 @@ impl Pipe {
                 / (f * mouth_area.sqrt())
         };
 
+        let air_hole_diameter =
+            2.0 * ((mouth_width * jet_thickness * 10.0).sqrt() / f64::consts::PI);
+
         PipeProperties {
             resonator_length,
             theoretical_resonator_length,
@@ -182,6 +188,7 @@ impl Pipe {
             circumference,
             pipe_depth,
             sound_power,
+            air_hole_diameter,
         }
     }
 }
