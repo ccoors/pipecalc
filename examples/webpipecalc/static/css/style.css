@@ -15,24 +15,33 @@ You should have received a copy of the GNU General Public License
 along with pipecalc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+body {
+    background-color: #EEEEEE;
+}
+
 .content {
     margin-top: 0.25cm;
 }
 
+.white-bg {
+    background-color: white;
+}
+
+.no-margin-label {
+    margin-bottom: 0;
+}
+
+.content-area {
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(204,204,204,1);
+    -moz-box-shadow: 0px 0px 5px 5px rgba(204,204,204,1);
+    box-shadow: 0px 0px 5px 5px rgba(204,204,204,1);
+}
+
 .header-area {
-    background-color: #EEEEEE;
-    -webkit-box-shadow: inset 0px -55px 10px -50px rgba(204,204,204,1);
-    -moz-box-shadow: inset 0px -55px 10px -50px rgba(204,204,204,1);
-    box-shadow: inset 0px -55px 10px -50px rgba(204,204,204,1);
     padding-top: 0.4cm;
-    padding-bottom: 0.4cm;
 }
 
 .footer-area {
-    background-color: #EEEEEE;
-    -webkit-box-shadow: inset 0px 55px 10px -50px rgba(204,204,204,1);
-    -moz-box-shadow: inset 0px 55px 10px -50px rgba(204,204,204,1);
-    box-shadow: inset 0px 55px 10px -50px rgba(204,204,204,1);
     padding-top: 0.4cm;
     padding-bottom: 0.4cm;
 }
@@ -51,10 +60,18 @@ table {
     font-size: 90%;
 }
 
-.gpl_logo {
-    width: 143.8px;
-    height: 71.4px;
-    background-image: url(../img/gpl-v3-logo.svg);
+.logo {
+    height: 72px;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.gpl_logo {
+    width: 145px;
+    background-image: url(../img/gpl3.svg);
+}
+
+.html_logo {
+    width: 50px;
+    background-image: url(../img/html5.svg);
 }

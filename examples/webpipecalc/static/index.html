@@ -244,7 +244,7 @@ window.onerror = function error_handler(errorMsg, url, lineNumber) {
         <div class="grid-x grid-margin-x">
             <div class="cell large-12">
                 <h1>WebPipeCalc</h1>
-                <p>A tool for calculating the dimensions of labial pipes for pipe organs.</p>
+                <p>A tool for calculating the dimensions of labial organ pipes.</p>
                 <p>
                     <button class="button secondary" data-open="read-me">Read me</button>
                 </p>
@@ -253,137 +253,138 @@ window.onerror = function error_handler(errorMsg, url, lineNumber) {
     </div>
 </div>
 
-<div class="content grid-container">
-    <div class="grid-x grid-margin-x">
-        <div class="cell large-12">
-            <fieldset class="fieldset">
-                <legend>Environment</legend>
-                <div class="grid-x">
-                    <div class="cell medium-4">
-                        <label>Air temperature
+<div class="content-area white-bg">
+    <div class="content grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12">
+                <fieldset class="fieldset">
+                    <legend>Environment</legend>
+                    <div class="grid-x">
+                        <div class="cell medium-4">
+                            <label for="air_temperature">Air temperature</label>
                             <div class="input-group">
                                 <input class="input-group-field" type="number" value="20" min="-273"
                                        id="air_temperature">
                                 <span class="input-group-label">$^{\circ}\text{C}$</span>
                             </div>
-                        </label>
-                    </div>
-                    <div class="cell medium-4">
-                        <label>Air density
+                        </div>
+                        <div class="cell medium-4">
+                            <label for="air_density">Air density</label>
                             <div class="input-group">
                                 <input class="input-group-field" type="number" value="1.2" min="0.05" step="0.05"
                                        id="air_density">
                                 <span class="input-group-label">$\frac{\text{kg}}{\text{m}^3}$</span>
                             </div>
-                        </label>
-                    </div>
-                    <div class="cell medium-4">
-                        <label>A4 frequency
+                        </div>
+                        <div class="cell medium-4">
+                            <label for="standard_pitch">A4 frequency</label>
                             <div class="input-group">
                                 <input class="input-group-field" type="number" value="440" min="1" step="0.1"
                                        id="standard_pitch">
                                 <span class="input-group-label">$\text{Hz}$</span>
                             </div>
-                        </label>
+                        </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <fieldset class="fieldset">
-                <legend>Organ properties</legend>
+                <fieldset class="fieldset">
+                    <legend>Organ properties</legend>
 
-                <div class="grid-x">
-                    <div class="cell small-8">
-                        <label>Wind pressure
-                            <input type="number" value="60" min="1" step="0.5" id="pressure">
-                        </label>
+                    <div class="grid-x">
+                        <div class="cell small-8">
+                            <label>Wind pressure
+                                <input type="number" value="60" min="1" step="0.5" id="pressure">
+                            </label>
+                        </div>
+                        <div class="cell small-4">
+                            <label>Unit
+                                <select id="pressure_unit">
+                                    <option value="mmh2o">mmH2O</option>
+                                    <option value="pa">Pa</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
-                    <div class="cell small-4">
-                        <label>Unit
-                            <select id="pressure_unit">
-                                <option value="mmh2o">mmH2O</option>
-                                <option value="pa">Pa</option>
-                            </select>
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <fieldset class="fieldset">
-                <legend>Pipe rank options</legend>
+                <fieldset class="fieldset">
+                    <legend>Pipe rank options</legend>
 
-                <div class="grid-x">
-                    <div class="cell medium-2">
-                        <label>First octave <a data-open="help-octave-notation">
-                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        </a>
-                            <input type="number" value="4" min="-3" max="10" id="first_octave">
-                        </label>
-                    </div>
+                    <div class="grid-x">
+                        <div class="cell medium-2">
+                            <label>First octave <a data-open="help-octave-notation">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </a>
+                                <input type="number" value="4" min="-3" max="10" id="first_octave">
+                            </label>
+                        </div>
 
-                    <div class="cell medium-1">
+                        <div class="cell medium-1">
 
-                    </div>
+                        </div>
 
-                    <div class="cell medium-2">
-                        <label>Last octave
-                            <input type="number" value="6" min="-3" max="10" id="last_octave">
-                        </label>
-                    </div>
+                        <div class="cell medium-2">
+                            <label>Last octave
+                                <input type="number" value="6" min="-3" max="10" id="last_octave">
+                            </label>
+                        </div>
 
-                    <div class="cell medium-auto">
+                        <div class="cell medium-auto">
 
-                    </div>
-                </div>
-
-                <div class="grid-x">
-                    <div class="cell medium-4">
-                        <label>Intonation number <a data-open="help-intonation-number">
-                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        </a>
-                            <input type="number" value="2" min="0.5" step="0.01" id="intonation_number">
-                        </label>
+                        </div>
                     </div>
 
-                    <div class="cell medium-4">
-                        <label>Mouth to circumference ratio
-                            <input type="number" value="0.25" min="0.05" step="0.005" max="0.95" id="mouth_ratio">
-                        </label>
+                    <input type="hidden" name="mode" id="mode-input" value="mode-simple">
+
+                    <div class="grid-x">
+                        <div class="cell medium-4">
+                            <label>Intonation number <a data-open="help-intonation-number">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </a>
+                                <input type="number" value="2" min="0.5" step="0.01" id="intonation_number">
+                            </label>
+                        </div>
+
+                        <div class="cell medium-4">
+                            <label>Mouth to circumference ratio
+                                <input type="number" value="0.25" min="0.05" step="0.005" max="0.95" id="mouth_ratio">
+                            </label>
+                        </div>
+
+                        <div class="cell medium-4">
+                            <label>Cutup to mouth width ratio
+                                <input type="number" value="0.3" min="0.05" step="0.01" id="cutup_ratio">
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="cell medium-4">
-                        <label>Cutup to mouth width ratio
-                            <input type="number" value="0.3" min="0.05" step="0.01" id="cutup_ratio">
-                        </label>
-                    </div>
-                </div>
-
-                <label>Distance in halftones to the same pipes in the Normalmensur by Töpfer
-                    <input type="number" value="-2" min="-40" max="40" step="0.25" id="tnm_distance">
-                </label>
-
-                <br>
-
-                <p>Stopped pipes?</p>
-                <div class="switch large">
-                    <input class="switch-input" id="stopped" type="checkbox" name="stopped">
-                    <label class="switch-paddle" for="stopped">
-                        <span class="show-for-sr">Stopped pipes?</span>
-                        <span class="switch-active" aria-hidden="true">Yes</span>
-                        <span class="switch-inactive" aria-hidden="true">No</span>
+                    <label>Distance in halftones to the same pipes in the Normalmensur by Töpfer
+                        <input type="number" value="-2" min="-40" max="40" step="0.25" id="tnm_distance">
                     </label>
-                </div>
-            </fieldset>
 
-            <div class="mount-point"></div>
+                    <br>
+
+                    <p class="no-margin-label">Stopped pipes?</p>
+                    <div class="switch large">
+                        <input class="switch-input" id="stopped" type="checkbox" name="stopped">
+                        <label class="switch-paddle" for="stopped">
+                            <span class="show-for-sr">Stopped pipes?</span>
+                            <span class="switch-active" aria-hidden="true">Yes</span>
+                            <span class="switch-inactive" aria-hidden="true">No</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <div class="mount-point"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="output-table"></div>
+    <div id="output-table"></div>
 
-<div class="grid-container">
-    <div id="output-csv-download"></div>
+    <div class="grid-container">
+        <div id="output-csv-download"></div>
+    </div>
 </div>
 
 <div class="footer-area">
@@ -405,7 +406,13 @@ window.onerror = function error_handler(errorMsg, url, lineNumber) {
                 along with this program. If not, see <a href="http://www.gnu.org/licenses/" target="_blank">http://www.gnu.org/licenses/</a>.
             </p>
 
-            <div class="gpl_logo float-center"></div>
+            <div class="grid-x">
+                <div class="cell small-5"><div class="logo html_logo float-right"></div></div>
+                <div class="cell small-2"></div>
+                <div class="cell small-5"><div class="logo gpl_logo float-left"></div></div>
+            </div>
+
+            <span>HTML5 Logo by <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a></span>
         </footer>
     </div>
 </div>
@@ -416,7 +423,6 @@ window.onerror = function error_handler(errorMsg, url, lineNumber) {
 <script>
 $(document).foundation();
 </script>
-
 <script src="js/app.js"></script>
 </body>
 </html>
