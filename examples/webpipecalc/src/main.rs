@@ -168,15 +168,7 @@ fn render_table(model: &Model) -> (String, String) {
 
     add_header("Frequency", "\\text{Hz}", "Hz", &mut html, &mut csv, false);
     add_header(
-        "Theoretical resonator length",
-        "\\text{mm}",
-        "mm",
-        &mut html,
-        &mut csv,
-        false,
-    );
-    add_header(
-        "Actual resonator length",
+        "Resonator length (theoretical / actual)",
         "\\text{mm}",
         "mm",
         &mut html,
@@ -293,13 +285,8 @@ fn render_table(model: &Model) -> (String, String) {
             csv.push_str(&format!("{}{},", note_name, octave));
             add_entry(&format!("{:.2}", frequency), &mut html, &mut csv, false);
             add_entry(
-                &format!("{:.4}", dimensions.theoretical_resonator_length * 1000.0),
-                &mut html,
-                &mut csv,
-                false,
-            );
-            add_entry(
-                &format!("{:.4}", dimensions.resonator_length * 1000.0),
+                &format!("{:.4} / {:.4}", dimensions.theoretical_resonator_length * 1000.0,
+                         dimensions.resonator_length * 1000.0),
                 &mut html,
                 &mut csv,
                 false,
@@ -374,6 +361,7 @@ fn view(model: &Model) -> Html<Msg> {
             var csv_download = "data:text/csv;charset=utf-8," + encodeURIComponent(@{csv});
             $("#output-table").html(@{html_table});
             $("#output-csv-download").html("<a class=\"button success radius\" href=\"" + csv_download + "\" download=\"pipes.csv\">Download results as CSV</a>");
+            $("#output-pipe-template").show();
             MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         }
 
