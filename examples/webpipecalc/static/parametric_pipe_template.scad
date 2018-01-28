@@ -50,7 +50,7 @@ stop_thickness           = 10;
 stop_handle_length       = 20;
 
 // The diameter of the handle of the tuning stop
-stop_handle_diameter    = width / 4;
+stop_handle_diameter     = width / 4;
 
 // If true, place the pipe and its lid next to each other to allow for easier 3D printing
 print_model              = true;

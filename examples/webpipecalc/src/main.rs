@@ -145,6 +145,22 @@ fn add_header(
     }
 }
 
+fn add_double_header(
+    title: &str,
+    title1: &str,
+    title2: &str,
+    unit_html: &str,
+    unit_csv: &str,
+    html: &mut String,
+    csv: &mut String,
+) {
+    html.push_str(&format!(
+        "<th>{} $\\left[{}\\right]$</th>",
+        title, unit_html
+    ));
+    csv.push_str(&format!("\"{} [{}]\",\"{} [{}]\",", title1, unit_csv, title2, unit_csv));
+}
+
 fn add_entry(value: &str, html: &mut String, csv: &mut String, last: bool) {
     html.push_str(&format!("<td>{}</td>", value));
     if last {
@@ -152,6 +168,12 @@ fn add_entry(value: &str, html: &mut String, csv: &mut String, last: bool) {
     } else {
         csv.push_str(&format!("{},", value));
     }
+}
+
+fn add_double_entry(value1: &str, value2: &str, html: &mut String, csv: &mut String) {
+    html.push_str(&format!("<td>{} / {}</td>", value1, value2));
+    csv.push_str(&format!("{},", value1));
+    csv.push_str(&format!("{},", value2));
 }
 
 fn render_table(model: &Model) -> (String, String) {
@@ -167,13 +189,14 @@ fn render_table(model: &Model) -> (String, String) {
     csv.push_str("\"Note\",");
 
     add_header("Frequency", "\\text{Hz}", "Hz", &mut html, &mut csv, false);
-    add_header(
+    add_double_header(
         "Resonator length (theoretical / actual)",
+        "Theoretical resonator length",
+        "Actual resonator length",
         "\\text{mm}",
         "mm",
         &mut html,
         &mut csv,
-        false,
     );
     add_header("Diameter", "\\text{mm}", "mm", &mut html, &mut csv, false);
     add_header(
@@ -284,12 +307,11 @@ fn render_table(model: &Model) -> (String, String) {
             html.push_str(&format!("<td>{}</td>", formatted_note_name));
             csv.push_str(&format!("{}{},", note_name, octave));
             add_entry(&format!("{:.2}", frequency), &mut html, &mut csv, false);
-            add_entry(
-                &format!("{:.4} / {:.4}", dimensions.theoretical_resonator_length * 1000.0,
-                         dimensions.resonator_length * 1000.0),
+            add_double_entry(
+                &format!("{:.4}", dimensions.theoretical_resonator_length * 1000.0),
+                &format!("{:.4}", dimensions.resonator_length * 1000.0),
                 &mut html,
                 &mut csv,
-                false,
             );
             add_entry(
                 &format!("{:.4}", radius * 2.0 * 1000.0),
