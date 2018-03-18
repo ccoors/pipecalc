@@ -5,5 +5,5 @@ authors = ["Christian F. Coors <ccoors@uni-bremen.de>"]
 
 [dependencies]
 yew = "0.2"
-stdweb = "0.3"
+stdweb = "0.4"
 pipecalc = { path = "../.." }
