@@ -12,4 +12,4 @@ Install `cargo-web` and then run
     cargo +nightly web start --release
 
 ## Demo
-https://cuervo.phoenix.uberspace.de/webpipecalc/
+https://www.ccoors.de/webpipecalc/
